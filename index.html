@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HR Consulting Billing AI Demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Demo navigation">
+        <div class="brand-lockup">
+          <span class="brand-mark">AI</span>
+          <div>
+            <p>Thomas DeLeon</p>
+            <strong>HR Billing Demo</strong>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Primary">
+          <button class="nav-item active" type="button" data-view="overview">Overview</button>
+          <button class="nav-item" type="button" data-view="exceptions">Exceptions</button>
+          <button class="nav-item" type="button" data-view="workflow">Workflow</button>
+          <button class="nav-item" type="button" data-view="roadmap">Roadmap</button>
+        </nav>
+
+        <section class="demo-note">
+          <p class="eyebrow">Demo goal</p>
+          <p>Show Cesar Augusto how AI can audit HR consulting invoices, catch likely billing errors, and route clean approvals without replacing the process he is implementing.</p>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Prototype best guess</p>
+            <h1>AI HR Billing Control Tower</h1>
+            <p class="lede">A demo workflow for reducing HR consulting invoice mistakes, retainer leakage, duplicate billable hours, and manual follow-up.</p>
+          </div>
+          <div class="topbar-actions">
+            <button class="secondary-button" type="button" id="resetDemo">Reset</button>
+            <button class="primary-button" type="button" id="runAudit">Run AI audit</button>
+          </div>
+        </header>
+
+        <section class="metrics-grid" aria-label="Billing performance metrics">
+          <article class="metric">
+            <span>Invoices reviewed</span>
+            <strong id="metricReviewed">184</strong>
+            <p>37 auto-cleared today</p>
+          </article>
+          <article class="metric">
+            <span>Risk flagged</span>
+            <strong id="metricRisk">$18.7k</strong>
+            <p>Potential leakage prevented</p>
+          </article>
+          <article class="metric">
+            <span>Human touches saved</span>
+            <strong id="metricTouches">63%</strong>
+            <p>Compared with manual review</p>
+          </article>
+          <article class="metric">
+            <span>Confidence</span>
+            <strong id="metricConfidence">91%</strong>
+            <p>Average across open exceptions</p>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel queue-panel" id="exceptions">
+            <div class="panel-heading">
+              <div>
+              <p class="eyebrow">Live exception queue</p>
+              <h2>HR consulting billing risks</h2>
+              </div>
+              <span class="status-pill" id="queueStatus">4 need review</span>
+            </div>
+
+            <div class="exception-list" id="exceptionList"></div>
+          </article>
+
+          <article class="panel analysis-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Selected invoice</p>
+                <h2 id="invoiceTitle">Invoice analysis</h2>
+              </div>
+              <span class="status-pill muted" id="confidenceBadge">Confidence 94%</span>
+            </div>
+
+            <div class="invoice-summary">
+              <div>
+                <span>Client / engagement</span>
+                <strong id="vendorName">Acme Health - HRIS Advisory</strong>
+              </div>
+              <div>
+                <span>Invoice total</span>
+                <strong id="invoiceTotal">$12,840.00</strong>
+              </div>
+              <div>
+                <span>Recommended action</span>
+                <strong id="recommendedAction">Hold for scope review</strong>
+              </div>
+            </div>
+
+            <div class="reason-box">
+              <h3>Why AI flagged it</h3>
+              <p id="reasonText">The invoice includes senior consultant hours above the weekly cap and repeats a discovery workshop that was billed last week.</p>
+            </div>
+
+            <div class="evidence-table" aria-label="Invoice evidence">
+              <div class="evidence-row header">
+                <span>Check</span>
+                <span>System value</span>
+                <span>AI finding</span>
+              </div>
+              <div class="evidence-row">
+                <span>Rate card</span>
+                <span id="systemValue">$225 / senior hour</span>
+                <span id="aiFinding">Invoice uses $275 / hour</span>
+              </div>
+              <div class="evidence-row">
+                <span>Scope status</span>
+                <span id="poValue">Discovery phase complete</span>
+                <span id="poFinding">Workshop billed twice</span>
+              </div>
+              <div class="evidence-row">
+                <span>Approval rule</span>
+                <span id="approvalValue">Manager + finance</span>
+                <span id="approvalFinding">Finance approval missing</span>
+              </div>
+            </div>
+
+            <div class="decision-row">
+              <button class="secondary-button" type="button" id="draftNote">Draft client note</button>
+              <button class="secondary-button" type="button" id="assignOwner">Assign owner</button>
+              <button class="primary-button" type="button" id="approveResolution">Mark resolved</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="content-grid lower-grid">
+          <article class="panel" id="workflow">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Suggested operating model</p>
+              <h2>Human-in-the-loop HR billing workflow</h2>
+              </div>
+            </div>
+            <ol class="workflow-list">
+              <li><span>1</span><p>Ingest HR consulting agreements, SOWs, timesheets, retainers, milestone records, and invoices.</p></li>
+              <li><span>2</span><p>AI checks duplicate hours, rate cards, out-of-scope work, retainer drawdown, milestone timing, and approval policy.</p></li>
+              <li><span>3</span><p>Clean invoices auto-clear; exceptions route to HR, finance, or the engagement lead with evidence.</p></li>
+              <li><span>4</span><p>Every correction trains a review playbook that improves the next batch.</p></li>
+            </ol>
+          </article>
+
+          <article class="panel" id="roadmap">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Demo talk track</p>
+                <h2>Questions for Mike</h2>
+              </div>
+            </div>
+            <div class="question-list">
+              <label><input type="checkbox" checked /> Which HR consulting billing errors happen most often today?</label>
+              <label><input type="checkbox" checked /> Where does Mike's process create the cleanest timesheet and SOW handoff?</label>
+              <label><input type="checkbox" /> Which systems hold invoices, SOWs, time entries, approvals, and payments?</label>
+              <label><input type="checkbox" /> What should AI be allowed to approve automatically vs. only recommend?</label>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel memo-panel" aria-live="polite">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Generated assistant output</p>
+              <h2>AI work product</h2>
+            </div>
+          </div>
+          <p id="assistantMemo">Select an exception or run the audit to generate a concise reviewer note.</p>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
