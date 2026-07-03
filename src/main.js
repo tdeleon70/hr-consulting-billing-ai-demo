@@ -1,75 +1,75 @@
 const exceptions = [
   {
-    id: "HRC-10482",
-    vendor: "Acme Health - HRIS Advisory",
-    total: "$12,840.00",
+    id: "TIME-10482",
+    vendor: "Site 3 - East Warehouse",
+    total: "16.0 hrs",
     risk: "High",
     confidence: 94,
-    action: "Hold for scope review",
+    action: "Confirm source record",
     reason:
-      "The invoice includes senior consultant hours above the weekly cap and repeats a discovery workshop that was billed last week.",
-    systemValue: "$225 / senior hour",
-    aiFinding: "Invoice uses $275 / hour",
-    poValue: "Discovery phase complete",
-    poFinding: "Workshop billed twice",
-    approvalValue: "Engagement lead + finance",
-    approvalFinding: "Lead approval missing",
+      "The same employee shift appears once in an XLS time card and once in an emailed correction, creating a likely duplicate before ADP and QuickBooks entry.",
+    systemValue: "XLS + email correction",
+    aiFinding: "Same employee/date/site repeated",
+    poValue: "Hourly labor only",
+    poFinding: "16.0 duplicate labor hours",
+    approvalValue: "ADP + QuickBooks",
+    approvalFinding: "Would overpay and overbill",
     memo:
-      "Recommended hold: Acme Health's HRIS advisory invoice appears to exceed the agreed senior consultant rate and includes a duplicate discovery workshop. Ask the engagement lead to confirm scope before payment release.",
+      "Recommended hold: Site 3 has a likely duplicate 16.0-hour labor entry from an XLS time card and an email correction. Confirm the source of truth before ADP payroll upload or QuickBooks billing.",
   },
   {
-    id: "HRC-10501",
-    vendor: "BrightPath Manufacturing - Recruiting Sprint",
-    total: "$8,375.20",
+    id: "TIME-10501",
+    vendor: "Site 1 - North Clinic",
+    total: "8.5 hrs",
     risk: "Medium",
     confidence: 89,
-    action: "Request placement backup",
+    action: "Add missing site code",
     reason:
-      "The invoice includes a success fee for one candidate, but the acceptance date and guarantee period documentation are missing.",
-    systemValue: "18% placement fee",
-    aiFinding: "Fee math is correct",
-    poValue: "Offer accepted",
-    poFinding: "Acceptance proof missing",
-    approvalValue: "Talent lead approval",
-    approvalFinding: "Ready after backup",
+      "A PDF time sheet includes employee hours and date, but the customer site is blank, which can push labor to the wrong QuickBooks customer invoice.",
+    systemValue: "PDF time sheet",
+    aiFinding: "Missing customer site",
+    poValue: "Hourly labor only",
+    poFinding: "8.5 hours need site assignment",
+    approvalValue: "QuickBooks customer field",
+    approvalFinding: "Cannot invoice accurately",
     memo:
-      "Request placement backup for BrightPath Manufacturing before approval. Fee math matches the recruiting agreement, but acceptance evidence and guarantee-period start date should be attached.",
+      "Needs review: 8.5 labor hours are readable from the PDF time sheet, but the customer site is missing. Assign the correct site before exporting the ADP sheet and creating the QuickBooks invoice.",
   },
   {
-    id: "HRC-10507",
-    vendor: "Meridian Bank - Compensation Study",
-    total: "$22,410.50",
+    id: "TIME-10507",
+    vendor: "Site 5 - South Distribution",
+    total: "24.0 hrs",
     risk: "High",
     confidence: 92,
-    action: "Split and escalate",
+    action: "Reconcile ADP/QB hours",
     reason:
-      "The invoice includes compensation benchmarking and executive leveling work, but the SOW separates those into two departments and only one has approved.",
-    systemValue: "HR + executive office",
-    aiFinding: "Single department coded",
-    poValue: "Milestone 2 reached",
-    poFinding: "Cost split mismatch",
-    approvalValue: "Two budget owners",
-    approvalFinding: "One approval missing",
+      "The payroll upload sheet shows 24.0 paid labor hours, but the QuickBooks billing draft only includes 20.0 billable hours for the same employee and site.",
+    systemValue: "ADP upload: 24.0 hrs",
+    aiFinding: "QuickBooks draft: 20.0 hrs",
+    poValue: "Customer-billable labor",
+    poFinding: "4.0 hours underbilled",
+    approvalValue: "ADP/QB reconciliation",
+    approvalFinding: "Payroll and billing mismatch",
     memo:
-      "Escalate Meridian Bank for budget-owner approval and cost split. Payment can proceed once compensation benchmarking and executive leveling are allocated correctly.",
+      "Reconcile before billing: ADP payroll includes 24.0 labor hours for Site 5, while QuickBooks includes 20.0. Confirm whether 4.0 hours should be billed or excluded with a documented reason.",
   },
   {
-    id: "HRC-10514",
-    vendor: "Lone Star Retail - HR Policy Retainer",
-    total: "$4,980.00",
+    id: "TIME-10514",
+    vendor: "Site 2 - West Office",
+    total: "3.0 hrs",
     risk: "Low",
     confidence: 87,
-    action: "Approve with note",
+    action: "Exclude non-labor line",
     reason:
-      "The amount matches the monthly retainer, but the billing period overlaps by three days with the prior invoice.",
-    systemValue: "Monthly retainer",
-    aiFinding: "3-day date overlap",
-    poValue: "Recurring advisory",
-    poFinding: "No duplicate amount",
-    approvalValue: "Auto-approve under $5k",
-    approvalFinding: "Add audit note",
+      "An emailed note was manually typed into the billing spreadsheet as labor hours, but the client confirmed only labor service provided gets billed.",
+    systemValue: "Email note",
+    aiFinding: "Admin follow-up typed as 3.0 labor hours",
+    poValue: "Calls/emails/research not billed",
+    poFinding: "Non-labor line should be excluded",
+    approvalValue: "QuickBooks invoice draft",
+    approvalFinding: "Remove before customer billing",
     memo:
-      "Lone Star Retail can be approved with an audit note. Retainer amount is correct, but the invoice date range should be normalized in the payment record.",
+      "Remove from billing draft: Site 2 includes 3.0 hours from an email note that appears to be administrative follow-up, not labor service provided. Keep the note as audit context, not a billable line.",
   },
 ];
 
@@ -168,8 +168,9 @@ function renderAnalysis() {
 
 function renderMetrics() {
   const openCount = exceptions.length - state.resolved.size;
-  const reviewed = 184 + state.auditRuns * 12;
-  const riskValue = state.resolved.size > 0 ? "$11.2k" : "$18.7k";
+  const reviewed = 5;
+  const cardsChecked = 42 + state.auditRuns * 8;
+  const manualEntriesAvoided = 118 + state.auditRuns * 22;
   const confidence =
     Math.round(
       exceptions
@@ -178,8 +179,8 @@ function renderMetrics() {
     ) || 0;
 
   fields.metricReviewed.textContent = String(reviewed);
-  fields.metricRisk.textContent = riskValue;
-  fields.metricTouches.textContent = state.auditRuns > 0 ? "71%" : "63%";
+  fields.metricRisk.textContent = String(cardsChecked);
+  fields.metricTouches.textContent = String(manualEntriesAvoided);
   fields.metricConfidence.textContent = `${confidence}%`;
   queueStatus.textContent = `${openCount} need review`;
 }
@@ -194,7 +195,7 @@ function render() {
 function runAudit() {
   state.auditRuns += 1;
   const item = getActiveException();
-  assistantMemo.textContent = `Audit complete: ${exceptions.length} invoices sampled, ${exceptions.length - state.resolved.size} exceptions still open. Next best action is "${item.action}" for ${item.id} because ${item.reason.toLowerCase()}`;
+  assistantMemo.textContent = `Time audit complete: XLS, PDF, and email time-card sources were normalized for 5 customer sites. ${exceptions.length - state.resolved.size} exceptions still need review. Next best action is "${item.action}" for ${item.id} because ${item.reason.toLowerCase()}`;
   runAuditButton.textContent = "Audit refreshed";
   renderMetrics();
 }
@@ -203,26 +204,26 @@ function resetDemo() {
   state.activeId = exceptions[0].id;
   state.resolved.clear();
   state.auditRuns = 0;
-  runAuditButton.textContent = "Run AI audit";
-  assistantMemo.textContent = "Select an exception or run the audit to generate a concise reviewer note.";
+  runAuditButton.textContent = "Run time audit";
+  assistantMemo.textContent = "Select an exception or run the time audit to generate a concise reviewer note.";
   render();
 }
 
 function markResolved() {
   const item = getActiveException();
   state.resolved.add(item.id);
-  assistantMemo.textContent = `${item.id} marked resolved. The audit trail now stores the reason, evidence, reviewer action, and owner decision for future AI checks.`;
+  assistantMemo.textContent = `${item.id} marked resolved. The audit trail now stores the source file, extracted hours, reviewer action, and ADP/QuickBooks billing decision for future checks.`;
   render();
 }
 
 function draftVendorNote() {
   const item = getActiveException();
-  assistantMemo.textContent = `Draft client note: Please review ${item.id}. Our billing audit found: ${item.reason} Can you send a corrected invoice, timesheet backup, or engagement-lead approval so finance can release payment?`;
+  assistantMemo.textContent = `Draft site note: Please review ${item.id}. The time audit found: ${item.reason} Can you confirm the correct labor hours and customer site before we finalize ADP payroll and QuickBooks billing?`;
 }
 
 function assignOwner() {
   const item = getActiveException();
-  assistantMemo.textContent = `${item.id} assigned to Finance Ops with a same-day SLA. AI attached the invoice, SOW evidence, timesheet context, approval rule, and suggested resolution path.`;
+  assistantMemo.textContent = `${item.id} assigned to billing review with a same-day SLA. AI attached the original time-card source, extracted hours, customer site, ADP row, QuickBooks draft line, and suggested resolution path.`;
 }
 
 runAuditButton.addEventListener("click", runAudit);

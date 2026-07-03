@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HR Consulting Billing AI Demo</title>
+    <title>Labor Billing Accuracy AI Demo</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -13,7 +13,7 @@
           <span class="brand-mark">AI</span>
           <div>
             <p>Thomas DeLeon</p>
-            <strong>HR Billing Demo</strong>
+            <strong>Labor Billing Demo</strong>
           </div>
         </div>
 
@@ -26,52 +26,83 @@
 
         <section class="demo-note">
           <p class="eyebrow">Demo goal</p>
-          <p>Show Cesar Augusto how AI can audit HR consulting invoices, catch likely billing errors, and route clean approvals without replacing the process he is implementing.</p>
+          <p>Show Cesar Augusto how AI can reduce manual time-entry errors across a specific 5-site customer relationship before scaling the model.</p>
         </section>
       </aside>
 
       <section class="workspace">
         <header class="topbar">
           <div>
-            <p class="eyebrow">Prototype best guess</p>
-            <h1>AI HR Billing Control Tower</h1>
-            <p class="lede">A demo workflow for reducing HR consulting invoice mistakes, retainer leakage, duplicate billable hours, and manual follow-up.</p>
+            <p class="eyebrow">Tailored prototype</p>
+            <h1>AI Labor Billing Accuracy Desk</h1>
+            <p class="lede">A focused demo for hourly labor billing across 5 customer sites: capture employee time cards, reduce manual spreadsheet entry, prepare ADP payroll upload, and reconcile QuickBooks customer billing.</p>
           </div>
           <div class="topbar-actions">
             <button class="secondary-button" type="button" id="resetDemo">Reset</button>
-            <button class="primary-button" type="button" id="runAudit">Run AI audit</button>
+            <button class="primary-button" type="button" id="runAudit">Run time audit</button>
           </div>
         </header>
 
         <section class="metrics-grid" aria-label="Billing performance metrics">
           <article class="metric">
-            <span>Invoices reviewed</span>
-            <strong id="metricReviewed">184</strong>
-            <p>37 auto-cleared today</p>
+            <span>Customer sites</span>
+            <strong id="metricReviewed">5</strong>
+            <p>Single relationship model</p>
           </article>
           <article class="metric">
-            <span>Risk flagged</span>
-            <strong id="metricRisk">$18.7k</strong>
-            <p>Potential leakage prevented</p>
+            <span>Time cards checked</span>
+            <strong id="metricRisk">42</strong>
+            <p>XLS, PDF, and email sources</p>
           </article>
           <article class="metric">
-            <span>Human touches saved</span>
-            <strong id="metricTouches">63%</strong>
-            <p>Compared with manual review</p>
+            <span>Manual entries avoided</span>
+            <strong id="metricTouches">118</strong>
+            <p>Spreadsheet rows pre-filled</p>
           </article>
           <article class="metric">
-            <span>Confidence</span>
+            <span>Billing confidence</span>
             <strong id="metricConfidence">91%</strong>
-            <p>Average across open exceptions</p>
+            <p>Average across open checks</p>
           </article>
+        </section>
+
+        <section class="panel flow-panel" id="overview">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Current information flow</p>
+              <h2>Where AI fits without changing the client process</h2>
+            </div>
+          </div>
+          <div class="flow-steps" aria-label="Billing workflow">
+            <div>
+              <span>1</span>
+              <strong>Time cards arrive</strong>
+              <p>XLS sheets, PDF sheets, and email details from employee labor activity.</p>
+            </div>
+            <div>
+              <span>2</span>
+              <strong>AI extracts and checks</strong>
+              <p>Reads hours by employee, date, site, labor type, and flags missing or duplicate entries.</p>
+            </div>
+            <div>
+              <span>3</span>
+              <strong>Spreadsheet is prepared</strong>
+              <p>Creates the calculation sheet used for ADP payroll and QuickBooks billing.</p>
+            </div>
+            <div>
+              <span>4</span>
+              <strong>ADP and QuickBooks align</strong>
+              <p>Confirms paid labor hours match customer billable labor hours before invoices go out.</p>
+            </div>
+          </div>
         </section>
 
         <section class="content-grid">
           <article class="panel queue-panel" id="exceptions">
             <div class="panel-heading">
               <div>
-              <p class="eyebrow">Live exception queue</p>
-              <h2>HR consulting billing risks</h2>
+                <p class="eyebrow">Manual-entry exception queue</p>
+                <h2>Labor billing accuracy risks</h2>
               </div>
               <span class="status-pill" id="queueStatus">4 need review</span>
             </div>
@@ -82,58 +113,58 @@
           <article class="panel analysis-panel">
             <div class="panel-heading">
               <div>
-                <p class="eyebrow">Selected invoice</p>
-                <h2 id="invoiceTitle">Invoice analysis</h2>
+                <p class="eyebrow">Selected time-card issue</p>
+                <h2 id="invoiceTitle">Time entry analysis</h2>
               </div>
               <span class="status-pill muted" id="confidenceBadge">Confidence 94%</span>
             </div>
 
             <div class="invoice-summary">
               <div>
-                <span>Client / engagement</span>
-                <strong id="vendorName">Acme Health - HRIS Advisory</strong>
+                <span>Customer site</span>
+                <strong id="vendorName">Site 3 - East Warehouse</strong>
               </div>
               <div>
-                <span>Invoice total</span>
-                <strong id="invoiceTotal">$12,840.00</strong>
+                <span>Hours at risk</span>
+                <strong id="invoiceTotal">16.0 hrs</strong>
               </div>
               <div>
                 <span>Recommended action</span>
-                <strong id="recommendedAction">Hold for scope review</strong>
+                <strong id="recommendedAction">Confirm source record</strong>
               </div>
             </div>
 
             <div class="reason-box">
               <h3>Why AI flagged it</h3>
-              <p id="reasonText">The invoice includes senior consultant hours above the weekly cap and repeats a discovery workshop that was billed last week.</p>
+              <p id="reasonText">The same employee shift appears once in an XLS time card and once in an emailed correction, creating a likely duplicate before ADP and QuickBooks entry.</p>
             </div>
 
             <div class="evidence-table" aria-label="Invoice evidence">
               <div class="evidence-row header">
                 <span>Check</span>
-                <span>System value</span>
+                <span>Source data</span>
                 <span>AI finding</span>
               </div>
               <div class="evidence-row">
-                <span>Rate card</span>
-                <span id="systemValue">$225 / senior hour</span>
-                <span id="aiFinding">Invoice uses $275 / hour</span>
+                <span>Time source</span>
+                <span id="systemValue">XLS + email correction</span>
+                <span id="aiFinding">Same employee/date/site repeated</span>
               </div>
               <div class="evidence-row">
-                <span>Scope status</span>
-                <span id="poValue">Discovery phase complete</span>
-                <span id="poFinding">Workshop billed twice</span>
+                <span>Billing rule</span>
+                <span id="poValue">Hourly labor only</span>
+                <span id="poFinding">16.0 duplicate labor hours</span>
               </div>
               <div class="evidence-row">
-                <span>Approval rule</span>
-                <span id="approvalValue">Manager + finance</span>
-                <span id="approvalFinding">Finance approval missing</span>
+                <span>System impact</span>
+                <span id="approvalValue">ADP + QuickBooks</span>
+                <span id="approvalFinding">Would overpay and overbill</span>
               </div>
             </div>
 
             <div class="decision-row">
-              <button class="secondary-button" type="button" id="draftNote">Draft client note</button>
-              <button class="secondary-button" type="button" id="assignOwner">Assign owner</button>
+              <button class="secondary-button" type="button" id="draftNote">Draft site note</button>
+              <button class="secondary-button" type="button" id="assignOwner">Assign review</button>
               <button class="primary-button" type="button" id="approveResolution">Mark resolved</button>
             </div>
           </article>
@@ -144,14 +175,14 @@
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Suggested operating model</p>
-              <h2>Human-in-the-loop HR billing workflow</h2>
+                <h2>Human-in-the-loop labor billing workflow</h2>
               </div>
             </div>
             <ol class="workflow-list">
-              <li><span>1</span><p>Ingest HR consulting agreements, SOWs, timesheets, retainers, milestone records, and invoices.</p></li>
-              <li><span>2</span><p>AI checks duplicate hours, rate cards, out-of-scope work, retainer drawdown, milestone timing, and approval policy.</p></li>
-              <li><span>3</span><p>Clean invoices auto-clear; exceptions route to HR, finance, or the engagement lead with evidence.</p></li>
-              <li><span>4</span><p>Every correction trains a review playbook that improves the next batch.</p></li>
+              <li><span>1</span><p>Collect employee time cards from XLS files, PDF sheets, and emails.</p></li>
+              <li><span>2</span><p>AI extracts employee, date, customer site, labor hours, and source evidence into a review sheet.</p></li>
+              <li><span>3</span><p>AI flags missing sites, duplicate shifts, unusual hours, and ADP versus QuickBooks mismatches.</p></li>
+              <li><span>4</span><p>Approved rows feed the spreadsheet used for ADP payroll and customer billing in QuickBooks.</p></li>
             </ol>
           </article>
 
@@ -163,10 +194,10 @@
               </div>
             </div>
             <div class="question-list">
-              <label><input type="checkbox" checked /> Which HR consulting billing errors happen most often today?</label>
-              <label><input type="checkbox" checked /> Where does Mike's process create the cleanest timesheet and SOW handoff?</label>
-              <label><input type="checkbox" /> Which systems hold invoices, SOWs, time entries, approvals, and payments?</label>
-              <label><input type="checkbox" /> What should AI be allowed to approve automatically vs. only recommend?</label>
+              <label><input type="checkbox" checked /> Confirm whether a retainer agreement exists with Damarys.</label>
+              <label><input type="checkbox" checked /> Which time-card source is most error-prone: XLS, PDF, or email?</label>
+              <label><input type="checkbox" /> What exact spreadsheet layout is uploaded to ADP?</label>
+              <label><input type="checkbox" /> What QuickBooks fields must match ADP before customer billing?</label>
             </div>
           </article>
         </section>
@@ -175,10 +206,10 @@
           <div class="panel-heading">
             <div>
               <p class="eyebrow">Generated assistant output</p>
-              <h2>AI work product</h2>
+              <h2>Reviewer work product</h2>
             </div>
           </div>
-          <p id="assistantMemo">Select an exception or run the audit to generate a concise reviewer note.</p>
+          <p id="assistantMemo">Select an exception or run the time audit to generate a concise reviewer note.</p>
         </section>
       </section>
     </main>
