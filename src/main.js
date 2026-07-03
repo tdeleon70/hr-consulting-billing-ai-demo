@@ -87,6 +87,14 @@ const resetDemoButton = document.querySelector("#resetDemo");
 const approveResolutionButton = document.querySelector("#approveResolution");
 const draftNoteButton = document.querySelector("#draftNote");
 const assignOwnerButton = document.querySelector("#assignOwner");
+const intakeStatus = document.querySelector("#intakeStatus");
+const mockUploadButton = document.querySelector("#mockUpload");
+const processBatchButton = document.querySelector("#processBatch");
+const intakeModeButtons = document.querySelectorAll("[data-intake-mode]");
+const intakeContents = {
+  upload: document.querySelector("#uploadMode"),
+  connect: document.querySelector("#connectMode"),
+};
 const navItems = document.querySelectorAll(".nav-item");
 
 const fields = {
@@ -226,11 +234,50 @@ function assignOwner() {
   assistantMemo.textContent = `${item.id} assigned to billing review with a same-day SLA. AI attached the original time-card source, extracted hours, customer site, ADP row, QuickBooks draft line, and suggested resolution path.`;
 }
 
+function setIntakeMode(mode) {
+  intakeModeButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.intakeMode === mode);
+  });
+
+  Object.entries(intakeContents).forEach(([key, content]) => {
+    content.classList.toggle("active", key === mode);
+  });
+
+  intakeStatus.textContent =
+    mode === "upload"
+      ? "Upload mode: the reviewer would drag in XLS, PDF, and email export files for AI extraction."
+      : "Direct-connect mode: the system would monitor approved inbox, shared folder, ADP export, and QuickBooks sources.";
+}
+
+function mockUpload() {
+  setIntakeMode("upload");
+  intakeStatus.textContent =
+    "Sample files loaded: 1 XLS time-card sheet, 1 signed PDF time sheet, and 1 email correction export are ready for extraction.";
+}
+
+function processBatch() {
+  state.auditRuns += 1;
+  assistantMemo.textContent =
+    "Demo batch processed: AI extracted 42 time-card records from XLS, PDF, and email sources, prepared review rows for 5 sites, and surfaced 4 exceptions before ADP payroll and QuickBooks billing.";
+  intakeStatus.textContent =
+    "Processing complete: extracted fields include employee, date, site, labor hours, source file, and confidence score.";
+  runAuditButton.textContent = "Audit refreshed";
+  renderMetrics();
+}
+
 runAuditButton.addEventListener("click", runAudit);
 resetDemoButton.addEventListener("click", resetDemo);
 approveResolutionButton.addEventListener("click", markResolved);
 draftNoteButton.addEventListener("click", draftVendorNote);
 assignOwnerButton.addEventListener("click", assignOwner);
+mockUploadButton.addEventListener("click", mockUpload);
+processBatchButton.addEventListener("click", processBatch);
+
+intakeModeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setIntakeMode(button.dataset.intakeMode);
+  });
+});
 
 navItems.forEach((item) => {
   item.addEventListener("click", () => {

@@ -19,6 +19,7 @@
 
         <nav class="nav-list" aria-label="Primary">
           <button class="nav-item active" type="button" data-view="overview">Overview</button>
+          <button class="nav-item" type="button" data-view="intake">Intake</button>
           <button class="nav-item" type="button" data-view="exceptions">Exceptions</button>
           <button class="nav-item" type="button" data-view="workflow">Workflow</button>
           <button class="nav-item" type="button" data-view="roadmap">Roadmap</button>
@@ -94,6 +95,84 @@
               <strong>ADP and QuickBooks align</strong>
               <p>Confirms paid labor hours match customer billable labor hours before invoices go out.</p>
             </div>
+          </div>
+        </section>
+
+        <section class="panel intake-panel" id="intake">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Source intake demo</p>
+              <h2>How time cards would enter the system</h2>
+            </div>
+            <div class="mode-switch" aria-label="Intake mode">
+              <button class="mode-button active" type="button" data-intake-mode="upload">Upload files</button>
+              <button class="mode-button" type="button" data-intake-mode="connect">Direct connect</button>
+            </div>
+          </div>
+
+          <div class="intake-content active" id="uploadMode">
+            <div class="upload-dropzone" role="button" tabindex="0" aria-label="Mock file upload area">
+              <strong>Drop XLS, PDF, or email export files here</strong>
+              <p>Demo accepts simulated time-card sources and shows what the AI would extract before ADP and QuickBooks entry.</p>
+              <button class="secondary-button" type="button" id="mockUpload">Choose sample files</button>
+            </div>
+
+            <div class="source-list" aria-label="Sample uploaded files">
+              <div class="source-row">
+                <span class="file-icon xls">XLS</span>
+                <div>
+                  <strong>week-27-site-3-timecards.xlsx</strong>
+                  <p>18 rows found, 1 duplicate shift risk</p>
+                </div>
+                <em>Ready</em>
+              </div>
+              <div class="source-row">
+                <span class="file-icon pdf">PDF</span>
+                <div>
+                  <strong>site-1-signed-timesheet.pdf</strong>
+                  <p>8.5 labor hours found, site field missing</p>
+                </div>
+                <em>Needs review</em>
+              </div>
+              <div class="source-row">
+                <span class="file-icon eml">EML</span>
+                <div>
+                  <strong>email-corrections-export.eml</strong>
+                  <p>2 correction notes found, 1 non-labor entry excluded</p>
+                </div>
+                <em>Parsed</em>
+              </div>
+            </div>
+          </div>
+
+          <div class="intake-content" id="connectMode">
+            <div class="connector-grid" aria-label="Direct connection options">
+              <article>
+                <span class="connector-status connected">Connected</span>
+                <strong>Shared inbox</strong>
+                <p>Reads forwarded time-card emails and correction notes.</p>
+              </article>
+              <article>
+                <span class="connector-status connected">Connected</span>
+                <strong>Shared drive folder</strong>
+                <p>Monitors XLS and PDF time sheets dropped into a client folder.</p>
+              </article>
+              <article>
+                <span class="connector-status planned">Planned</span>
+                <strong>ADP export</strong>
+                <p>Compares approved labor hours against the payroll upload sheet.</p>
+              </article>
+              <article>
+                <span class="connector-status planned">Planned</span>
+                <strong>QuickBooks</strong>
+                <p>Checks that customer billing lines match approved labor hours.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="intake-actions">
+            <button class="primary-button" type="button" id="processBatch">Process demo batch</button>
+            <p id="intakeStatus">No live connection is required for this prototype; this area mocks the upload/direct-connect decision.</p>
           </div>
         </section>
 
